@@ -185,6 +185,8 @@ func (mc *MigrationController) syncGameServer(ctx context.Context, key string) e
 	}
 
 	if pod.Spec.NodeName != gs.Status.NodeName || address != gs.Status.Address {
+		mc.baseLogger.Warnf("metadata diff for gs=%s: pod.Spec.NodeName=%s, gs.Status.NodeName=%s, address=%s, gs.Status.Address=%s",
+			gs.Name, pod.Spec.NodeName, gs.Status.NodeName, address, gs.Status.Address)
 		gsCopy := gs.DeepCopy()
 
 		var eventMsg string
